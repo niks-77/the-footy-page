@@ -1,0 +1,41 @@
+.game-item {
+    display : flex;
+    gap : 10px;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 5px 10px;   
+    border-left: 3px solid;
+    border-right: 3px solid;
+    border-radius: 5px;
+    width: 500px;
+}
+
+.game-item:hover{
+    cursor:pointer;
+    transform: scale(1.1);
+    background-color:antiquewhite;
+}
+
+.team img {
+    height: 30px;
+    width: 30px;
+    object-fit: contain;
+}
+
+.team {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.score {
+    margin: 10px;
+    margin-left: 50px;
+    margin-right: 50px;
+    font-weight: bold;
+}
+
+.vs {
+    margin: 0 5px;
+    color: #666;
+}
