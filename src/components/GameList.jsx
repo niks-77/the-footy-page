@@ -1,13 +1,14 @@
   import { useState, useEffect } from 'react'
   import footballService  from '../services/football.js'
   import GamesByLeague from './GamesByLeague.jsx'
-  import './GameList.css'
+  import './GameList.styl'
   import { useMemo } from 'react'
   import useGameStore from '../stores/gameStore.js'
 
   const GameList = () => {
     const {games, setGames, date, setSelectedDate} = useGameStore()
     const [searchName, setSearchName] = useState('')
+    const [headerOne, setHeaderOne] = useState("Today's Matches")
 
     useEffect(() => {
       setGames(date)
@@ -39,21 +40,9 @@
     return(
       <div className='homepage'>
         <div className='games-column'>
-        <h1> Today's Matches </h1>
+        <h1> {headerOne} </h1>
 
-        <GamesByLeague games={filteredGames}/>
-      </div>  
-
-          <div className='date-picker'>
-            <button onClick ={() => setSelectedDate('yesterday')}
-              disabled={date === 'yesterday'}> Yesterday </button>
-            <button onClick= {() => setSelectedDate('today')} 
-              disabled={date  ==='today'}> Today </button>
-            <button onClick={() => setSelectedDate('tomorrow')} 
-              disabled={date==='tomorrow'}> Tomorrow </button>
-          </div>
-
-          <div className="form-column">
+        <div className="form-column">
             <form className="search-form">
             <input value={searchName} 
                     onChange={handleSearch}
@@ -62,7 +51,22 @@
             </form>
 
 
-          </div>  
+          </div>
+
+        <GamesByLeague games={filteredGames}/>
+      </div>  
+
+          <div className='date-picker'>
+            <button onClick ={() =>{ setHeaderOne("Yesterday's Matches");
+             setSelectedDate('yesterday')}}
+              disabled={date === 'yesterday'}> Yesterday </button>
+            <button onClick= {() => {setHeaderOne("Today's Matches"); setSelectedDate('today')}} 
+              disabled={date  ==='today'}> Today </button>
+            <button onClick={() => {setHeaderOne("Tomorrow's Matches"); setSelectedDate('tomorrow')}} 
+              disabled={date==='tomorrow'}> Tomorrow </button>
+          </div>
+
+            
       </div>
     )
   }

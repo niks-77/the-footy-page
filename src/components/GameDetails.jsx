@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import footballService from '../services/football.js/'
-import './GameDetails.css'
+import './GameDetails.styl'
 
 const GameDetails = () => {
     const {id} = useParams();

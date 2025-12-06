@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './Game.css'
+import './Game.styl'
 import { useNavigate } from 'react-router-dom';
 
 const Game = ({game}) => {
@@ -21,7 +21,11 @@ const Game = ({game}) => {
                 <span className='score'> {game.goals.home} </span>
             </div>
 
-            {game.fixture.status.short != "NS" && (<span className='vs'> - </span>) || 
+            {game.fixture.status.short != "NS" && game.fixture.status.short !== "FT" && (
+            <div className="live-indicator">
+              <span className="live-dot"></span>
+              <span className="live-text">LIVE</span>
+            </div>) || game.fixture.status.short != "NS" && (<span className='vs'> - </span>) ||
               <div className="kickoff-time">
                {formatTime(game.fixture.date)}
            </div> }
