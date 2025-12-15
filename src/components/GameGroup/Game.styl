@@ -1,11 +1,13 @@
 .game-item
   display flex
-  align-items center
+  flex-direction column
+  align-items auto
   justify-content space-between
   box-shadow 5px 5px lightblue
 
-  gap 15px
-  padding 12px 15px
+
+  gap 1px
+  padding 10px 10px
   flex 1 1 300px
   min-width 320px
   max-width 400px
@@ -22,9 +24,11 @@
 
 .team
   display flex
-  align-items center
+  align-items right
+  justify-content space-between
   gap 10px
   min-width 160px
+  
 
 .team img
   width 35px
@@ -41,32 +45,30 @@
   text-overflow ellipsis
 
 .score
-  font-size 22px
+  font-size 17px
   font-weight 700
-  color #111
-
+  color #462a2aff
+  
+.finished
   display flex
-  align-items center
-  justify-content center
-
-  min-width 35px
-  text-align center
-
-.vs
+  justify-content right
   color #888
   font-weight 600
-  font-size 16px
+  font-size 15px
 
 .kickoff-time
+  display flex
   font-size 14px
   font-weight 600
   color #3d7bff
   min-width 50px
   text-align center
+  justify-content right
 
 .live-indicator
   display flex
   align-items center
+  justify-content right
   gap 6px
 
 .live-dot

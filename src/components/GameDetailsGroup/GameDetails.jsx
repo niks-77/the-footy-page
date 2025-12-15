@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import footballService from '../services/football.js/'
+import footballService from '../../services/football.js'
 import './GameDetails.styl'
 
 const GameDetails = () => {

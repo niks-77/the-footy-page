@@ -1,4 +1,5 @@
-import Game from './Game.jsx'
+import Game from '../GameGroup/Game.jsx'
+import './GamesByLeague.styl'
 
 const GamesByLeague = ({games}) => {
     const groups = {}
@@ -21,7 +22,7 @@ const GamesByLeague = ({games}) => {
                 <div key={league}>
                     <h2> {league} </h2>
 
-                    <ul className='league-games'>
+                    <ul className='games-container'>
                         {games.map(game => (
                             <Game key={game.fixture.id} game = {game}/>
                         ))}

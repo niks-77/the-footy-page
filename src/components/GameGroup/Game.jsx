@@ -22,18 +22,18 @@ const Game = ({game}) => {
             </div>
 
             {game.fixture.status.short != "NS" && game.fixture.status.short !== "FT" && (
-            <div className="live-indicator">
+            <span className="live-indicator">
               <span className="live-dot"></span>
               <span className="live-text">LIVE</span>
-            </div>) || game.fixture.status.short != "NS" && (<span className='vs'> - </span>) ||
-              <div className="kickoff-time">
+            </span>) || game.fixture.status.short === "FT" && (<span className='finished'> Finished </span>) ||
+              <span className="kickoff-time">
                {formatTime(game.fixture.date)}
-           </div> }
+           </span> }
 
             <div className='team'>
-                <span className='score'> {game.goals.away} </span>
                 <img src= {game.teams.away.logo} />
                 <span className='team-name'> {game.teams.away.name} </span>
+                <span className='score'> {game.goals.away} </span>
             </div>
         </li>
     )

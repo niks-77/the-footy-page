@@ -1,6 +1,6 @@
 import {Routes, Route} from 'react-router-dom'
-import GameList from './components/GameList'
-import GameDetails from './components/GameDetails'
+import GameList from './components/GameListGroup/GameList'
+import GameDetails from './components/GameDetailsGroup/GameDetails'
 import './App.css'
 
 const App = () => {

@@ -1,9 +1,9 @@
   import { useState, useEffect } from 'react'
-  import footballService  from '../services/football.js'
-  import GamesByLeague from './GamesByLeague.jsx'
+  import footballService  from '../../services/football.js'
+  import GamesByLeague from '../GamesByLeagueGroup/GamesByLeague.jsx'
   import './GameList.styl'
   import { useMemo } from 'react'
-  import useGameStore from '../stores/gameStore.js'
+  import useGameStore from '../../stores/gameStore.js'
 
   const GameList = () => {
     const {games, setGames, date, setSelectedDate} = useGameStore()
@@ -39,22 +39,18 @@
     
     return(
       <div className='homepage'>
-        <div className='games-column'>
-        <h1> {headerOne} </h1>
-
-        <div className="form-column">
+        
+        <div className="search-container">
             <form className="search-form">
             <input value={searchName} 
                     onChange={handleSearch}
                     type="text" 
                     placeholder="Search for a game or league..." />
             </form>
-
-
           </div>
-
+          <h2> {headerOne} </h2>
+        
         <GamesByLeague games={filteredGames}/>
-      </div>  
 
           <div className='date-picker'>
             <button onClick ={() =>{ setHeaderOne("Yesterday's Matches");
