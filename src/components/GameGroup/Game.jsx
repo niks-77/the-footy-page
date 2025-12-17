@@ -12,7 +12,7 @@ const Game = ({game, onSelect}) => {
   }
 
     return(
-        <li className='game-item' 
+        <li className='game-item'
             onClick={() => onSelect(game.fixture.id)}>
 
             <div className='team'>
