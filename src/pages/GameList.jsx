@@ -43,6 +43,31 @@
     return(
       <div className='homepage'>
         
+        <div className='filter-container'>
+
+          <div className='filter-group'>
+            <span><h4>Filter by day </h4></span>
+          <div className='date-picker'>
+            <button onClick ={() =>{ setHeaderOne("Yesterday's Matches");
+             setSelectedDate('yesterday')}}
+              disabled={date === 'yesterday'}> Yesterday </button>
+            <button onClick= {() => {setHeaderOne("Today's Matches"); setSelectedDate('today')}} 
+              disabled={date  ==='today'}> Today </button>
+            <button onClick={() => {setHeaderOne("Tomorrow's Matches"); setSelectedDate('tomorrow')}} 
+              disabled={date==='tomorrow'}> Tomorrow </button>
+          </div>
+          </div>
+
+        <div className='filter-group'>  
+          <span><h4>Filter by type </h4></span>
+        <div className='filter-today-games'>
+          <button> All </button>
+          <button> Live </button>
+        </div>
+        </div>
+
+        <div className='filter-group'>  
+          <span><h4> Filter search </h4></span>
         <div className="search-container">
             <form className="search-form">
             <input value={searchName} 
@@ -51,7 +76,11 @@
                     placeholder="Search for a game or league..." />
             </form>
         </div>
-          <h2> {headerOne} </h2>
+        </div>
+
+        </div>
+
+        <h2> {headerOne} </h2>
         
         <GamesByLeague games={filteredGames}
             onSelectGame={openGame}/>
@@ -64,18 +93,7 @@
             </div>
           </div>
         )}
-
-          <div className='date-picker'>
-            <button onClick ={() =>{ setHeaderOne("Yesterday's Matches");
-             setSelectedDate('yesterday')}}
-              disabled={date === 'yesterday'}> Yesterday </button>
-            <button onClick= {() => {setHeaderOne("Today's Matches"); setSelectedDate('today')}} 
-              disabled={date  ==='today'}> Today </button>
-            <button onClick={() => {setHeaderOne("Tomorrow's Matches"); setSelectedDate('tomorrow')}} 
-              disabled={date==='tomorrow'}> Tomorrow </button>
-          </div>
-
-            
+  
       </div>
     )
   }

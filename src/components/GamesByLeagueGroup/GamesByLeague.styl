@@ -1,8 +1,6 @@
 .games-container
   display grid
   gap 20px
-
-  // laptop & desktop
   grid-template-columns repeat(3, 1fr)
 
 @media (max-width: 1024px)
@@ -12,3 +10,23 @@
 @media (max-width: 600px)
   .games-container
     grid-template-columns 1fr
+
+.league-group
+  margin-bottom 30px
+
+.league-header
+  display flex
+  align-items center
+  gap 10px
+  font-size 20px
+  font-weight bold
+  margin-bottom 10px
+
+.league-icon
+  width 35px
+  height 35px
+  object-fit contain
+
+.league-country
+  font-size 14px
+  color gray
