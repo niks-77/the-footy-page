@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = 'http://localhost:3001/api';
+const API = import.meta.env.API_URL
 
 export const getTodayGames = () => axios.get(`${API}/today`);
 export const getYesterdayGames = () => axios.get(`${API}/yesterday`);
