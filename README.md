@@ -4,6 +4,6 @@ This a front-end project made with React.js. I am using API-Football (https://ww
 The game times are displayed according to GMT +2 time offset.
 
 **Important** :
-I have the free license of the api, which allows 100 requests per day. App is deployed at https://football-app-gmt2.vercel.app
+I have the free license of the api, which allows 100 requests per day. App is deployed at https://the-footy-page-deployed.vercel.app
 
 
