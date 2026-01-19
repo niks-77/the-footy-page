@@ -4,6 +4,7 @@
   justify-content center
   align-items center
   font-size 20px
+  font-weight 500
   height 35px
 
   button
@@ -14,10 +15,17 @@
     background #d3e1efff
     font-size 13px
     color rgba(37, 37, 37, 1) 
-    transition all .3s ease-in-out
+    transition all .1s ease-in-out
     display inline-flex
     align-items center
     gap 6px
+    &:hover
+      background rgba(37, 37, 37, 1)
+      color #fff
+    &:disabled
+      background rgba(230, 229, 229, 1)
+      color #fff
+      cursor not-allowed  
 
 @media (max-width: 800px)    
   .dayfilter-group

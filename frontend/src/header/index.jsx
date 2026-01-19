@@ -1,6 +1,6 @@
 import React from 'react'
 import './index.styl'
-import logo from '../field.svg'
+import logo from '../../public/field.svg'
 
 const Header = () => {
   return (
