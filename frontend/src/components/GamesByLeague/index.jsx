@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import useGameStore from '../../stores/gameStore.js'
-import Game from '../GameGroup/Game.jsx'
-import LeagueSkeleton from '../SkeletonLoadingGroup/LeagueSkeleton.jsx'
-import './GamesByLeague.styl'
+import Game from '../Game/index.jsx'
+import LeagueSkeleton from '../SkeletonLoading/LeagueSkeleton.jsx'
+import './index.styl'
 
 const LEAGUES_PER_BATCH = 3
 
@@ -79,12 +79,14 @@ const GamesByLeague = ({ games, onSelectGame }) => {
                   className="league-icon"
                 />
               )}
-              <span>{league.name}</span>
-              {league.country && (
-                <span className="league-country">
-                  ({league.country})
-                </span>
-              )}
+              <div className="league-text">
+                <span>{league.name}</span>
+                {league.country && (
+                  <span className="league-country">
+                    {league.country}
+                  </span>
+                )}
+              </div>
             </h2>
 
             <ul className="games-container">

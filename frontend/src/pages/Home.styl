@@ -1,0 +1,92 @@
+.homepage
+  display flex
+  flex-direction column
+  gap 30px
+  margin 0 auto
+  min-height 100vh
+  padding 40px
+  max-width 1200px
+  padding-top 100px
+  
+.filter-container
+  display flex
+  justify-content space-between
+  align-items center
+  gap 20px
+  flex-wrap wrap
+
+.filters-left
+  display flex
+  align-items center
+  gap 16px
+
+.search-container
+  display flex
+  justify-content flex-end
+  flex 1
+  min-width 200px
+  
+.search-form
+  width 100%
+  max-width 300px
+  height 42px
+  background #ffffff
+  border 1px solid rgba(0, 0, 0, 0.1)
+  border-radius 12px
+  display flex
+  align-items center
+  padding 0 16px
+  gap 10px
+  transition all 0.2s ease
+  &:focus-within
+    border-color #000
+    box-shadow 0 4px 12px rgba(0, 0, 0, 0.05)
+
+.search-form svg
+  width 16px
+  height 16px
+  color #000
+  opacity 0.4
+  
+.search-form input
+  width 100%
+  background transparent
+  border none
+  font-size 15px
+  font-family inherit
+  color #000
+  outline none
+  letter-spacing -0.01em
+
+  &::placeholder  
+    color #aaa
+
+@media (max-width: 1024px)
+ .filter-container
+   justify-content center
+ .search-container
+   justify-content center
+
+@media (max-width: 800px)
+ .filter-container
+   flex-direction column
+ .filters-left
+   width 100%
+   justify-content center
+ .search-container
+   width 100%
+   justify-content center
+
+@media (max-width: 600px)
+ .date-picker button
+   font-size 12px
+   width 90px
+   height 60px
+
+.no-results
+  text-align center
+  padding 50px 0
+  h3
+    font-weight 700
+    letter-spacing -0.04em
+    color rgba(0,0,0,0.3)

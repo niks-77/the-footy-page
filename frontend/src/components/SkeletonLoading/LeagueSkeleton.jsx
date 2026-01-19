@@ -1,10 +1,10 @@
-import GameSkeleton from '../SkeletonLoadingGroup/GameSkeleton.jsx'
-import '../GamesByLeagueGroup/GamesByLeague.styl'
+import GameSkeleton from './GameSkeleton.jsx'
+import '../GamesByLeague/index.styl'
 
 const LeagueSkeleton = () => {
   return (
     <div>
-      {[1, 2,3].map(i => (
+      {[1, 2, 3].map(i => (
         <div key={i} className="league-group">
 
           <div className="league-header is-loading">

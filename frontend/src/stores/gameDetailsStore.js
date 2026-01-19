@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import {getGameStats} from '../services/football.js'
+import { getGameStats } from '../services/football.js'
 
 const mapStats = (statsArray) => {
     const mapped = {}
@@ -12,17 +12,23 @@ const mapStats = (statsArray) => {
 }
 
 const useGameDetailsStore = create((set) => ({
+    selectedGame: null,
     selectedGameId: null,
     homeStats: null,
     awayStats: null,
     loading: null,
     error: null,
 
-    openGame: async (gameId) => {
-        set({selectedGameId: gameId, loading: true, error: null})
+    openGame: async (game) => {
+        set({
+            selectedGame: game,
+            selectedGameId: game.fixture.id,
+            loading: true,
+            error: null
+        })
 
-        try{
-            const result = await getGameStats(gameId)
+        try {
+            const result = await getGameStats(game.fixture.id)
             const home = result.data.response[0]
             const away = result.data.response[1]
 
@@ -40,8 +46,8 @@ const useGameDetailsStore = create((set) => ({
             })
         }
 
-        catch(err){
-            set({ error: err.message, loading: false})
+        catch (err) {
+            set({ error: err.message, loading: false })
         }
     },
 

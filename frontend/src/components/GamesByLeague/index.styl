@@ -2,8 +2,9 @@
   display grid
   gap 20px
   grid-template-columns repeat(3, 1fr)
-  
+  padding 0
 
+  
 @media (max-width: 1024px)
   .games-container
     grid-template-columns repeat(2, 1fr)
@@ -13,26 +14,34 @@
     grid-template-columns 1fr
 
 .league-group
-  margin-bottom 80px
+  margin-bottom 50px
   
 
 .league-header
   display flex
   align-items center
   gap 10px
-  font-size 20px
-  font-weight bold
-  margin-bottom 30px
-  box-shadow 0px 10px 18px rgba(0,0,0,0.15)
+  font-size 18px
+  font-weight 700
+  margin-bottom 20px
+  letter-spacing -0.04em
 
 .league-icon
-  width 35px
-  height 35px
+  width 28px
+  height 28px
   object-fit contain
 
 .league-country
-  font-size 14px
-  color gray
+  font-size 13px
+  color rgba(0, 0, 0, 0.4)
+  font-weight 500
+  letter-spacing 0
+  
+
+.league-text
+  display flex
+  flex-direction column
+  gap 2px
 
 .league-header.is-loading span,
 .league-header.is-loading .league-icon
