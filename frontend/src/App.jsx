@@ -4,18 +4,19 @@ import NotFound from './pages/NotFound'
 import Header from './header/index.jsx'
 import './App.css'
 import Footer from './footer/index.jsx'
-import GameList from './pages/Home.jsx'
 
 const App = () => {
   return (
-    <div>
+    <div className="app-container">
       <Header />
 
-      <Routes>
-        <Route path='/' element={<GameList />} />
-        <Route path='/home' element={<GameList />} />
-        <Route path='*' element={<NotFound />} />
-      </Routes>
+      <main className="main-content">
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/home' element={<Home />} />
+          <Route path='*' element={<NotFound />} />
+        </Routes>
+      </main>
 
       <Footer />
     </div>

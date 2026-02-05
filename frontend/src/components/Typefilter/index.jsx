@@ -1,23 +1,24 @@
 import './index.styl'
-import useGameStore from '../../stores/gameStore'
+import useGameStore from '../../stores/gameListStore.js'
+import { GET_GAMES_OPTIONS } from '../../constants/index.js'
 
 
 const Typefilter = () => {
-    const { showLiveGames, setShowLiveGames } = useGameStore()
+    const { showLiveGames, toggleLiveGames } = useGameStore()
 
     return (
         <div className='typefilter-group'>
             <button
-                onClick={() => setShowLiveGames(false)}
+                onClick={toggleLiveGames}
                 disabled={!showLiveGames}>
-                All
+                {GET_GAMES_OPTIONS.ALL}
             </button>
 
             <button
-                onClick={() => setShowLiveGames(true)}
+                onClick={toggleLiveGames}
                 disabled={showLiveGames}>
                 <div className='live-indicator'></div>
-                Live
+                {GET_GAMES_OPTIONS.LIVE}
             </button>
         </div>
     )

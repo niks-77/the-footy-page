@@ -1,37 +1,36 @@
 import './index.styl'
 import { ChevronLeft, ChevronRight } from "lucide-react"
-import useGameStore from '../../stores/gameStore'
-import { useState } from 'react'
+import useGameStore from '../../stores/gameListStore'
+import { formatDateToString, isYesterday, isTomorrow } from '../../utils/dateFormatter'
+import { subDays, addDays } from 'date-fns'
 
 const Dayfilter = () => {
     const { date, setSelectedDate } = useGameStore()
-    const [count, setCount] = useState(1)
 
-    const turnCountToDays = (count) => {
-        switch (count) {
-            case 0:
-                return 'yesterday'
-            case 1:
-                return 'today'
-            case 2:
-                return 'tomorrow'
-            default:
-                return 'today'
-        }
+    const label = formatDateToString(date)
+
+    const handlePrevious = () => {
+        const newDate = subDays(date, 1)
+        setSelectedDate(newDate)
+    }
+
+    const handleNext = () => {
+        const newDate = addDays(date, 1)
+        setSelectedDate(newDate)
     }
 
     return (
         <div className='dayfilter-group'>
 
-            <button onClick={() => { setCount(count - 1); setSelectedDate(turnCountToDays(count - 1)) }}
-                disabled={date === 'yesterday'}>
+            <button onClick={handlePrevious}
+                disabled={isYesterday(date)}>
                 <ChevronLeft />
             </button>
 
-            <span> {date} </span>
+            <span> {label} </span>
 
-            <button onClick={() => { setCount(count + 1); setSelectedDate(turnCountToDays(count + 1)) }}
-                disabled={date === 'tomorrow'}>
+            <button onClick={handleNext}
+                disabled={isTomorrow(date)}>
                 <ChevronRight />
             </button>
 

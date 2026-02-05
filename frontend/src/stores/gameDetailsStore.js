@@ -1,5 +1,6 @@
 import { create } from "zustand";
-import { getGameStats } from '../services/football.js'
+import { getGamesById } from "../services/football";
+
 
 const mapStats = (statsArray) => {
     const mapped = {}
@@ -28,8 +29,9 @@ const useGameDetailsStore = create((set) => ({
         })
 
         try {
-            const result = await getGameStats(game.fixture.id)
+            const result = await getGamesById(game.fixture.id)
             const home = result.data.response[0]
+            console.log(result.data)
             const away = result.data.response[1]
 
             set({

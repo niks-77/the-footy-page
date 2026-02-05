@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import useGameStore from '../../stores/gameStore.js'
+import useGameStore from '../../stores/gameListStore.js'
 import Game from '../Game/index.jsx'
 import LeagueSkeleton from '../SkeletonLoading/LeagueSkeleton.jsx'
 import './index.styl'

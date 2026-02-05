@@ -1,32 +1,31 @@
 import { useState, useEffect } from 'react'
-import GamesByLeague from '../components/GamesByLeague/index.jsx'
 import './Home.styl'
 import { useMemo } from 'react'
-import useGameStore from '../stores/gameStore.js'
-import useGameDetailsStore from '../stores/gameDetailsStore.js'
-import GameDetails from '../components/GameDetails/index.jsx'
-import Typefilter from '../components/Typefilter/index.jsx'
-import Dayfilter from '../components/Dayfilter/index.jsx'
 import { SearchIcon } from 'lucide-react'
 import { isLive } from '../utils/gameStatuses.js'
+import { SEARCH_DEBOUNCE_MS } from '../constants/index.js'
+import { useGameStore, useGameDetailsStore } from '../stores/index.js'
+import { Dayfilter, Typefilter, GameDetails } from '../components/index.js'
 
 const GameList = () => {
-  const { showLiveGames, setShowLiveGames, games, setGames, date, setSelectedDate,
+  const { showLiveGames, games, setGames, date,
     loading } = useGameStore()
 
 
   const { selectedGameId, openGame, closeGame } = useGameDetailsStore()
 
+
   const [searchName, setSearchName] = useState('')
+
 
   useEffect(() => {
     setGames(date)
-  }, [date])
+  }, [date, setGames])
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setSearchName(searchName)
-    }, 250)
+    }, SEARCH_DEBOUNCE_MS)
 
     return () => clearTimeout(timer)
   }, [searchName])

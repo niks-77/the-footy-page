@@ -1,10 +1,8 @@
-import useGameStore from '../../stores/gameStore.js'
+import useGameStore from '../../stores/gameListStore.js'
 import './index.styl'
 import GameSkeleton from '../SkeletonLoading/GameSkeleton.jsx'
-import { isLive, isFinished, isNotStarted } from '../../utils/gameStatuses.js'
-import { format, parseISO } from 'date-fns'
-
-const formatTime = (isoDate) => format(parseISO(isoDate), 'HH:mm')
+import { isLive, isFinished, isNotStarted, isPostponed, isCancelled } from '../../utils/gameStatuses.js'
+import { formatTime } from '../../utils/dateFormatter.js'
 
 const Game = ({ game, onSelect }) => {
 
@@ -14,11 +12,8 @@ const Game = ({ game, onSelect }) => {
     return <GameSkeleton />
   }
 
-
   const status = game.fixture.status.short
-
-  const postoponed = (status === 'PST')
-  const cancelled = (status === 'CANC')
+  const time = formatTime(game.fixture.date)
 
   return (
     <li className="game-item" onClick={() => onSelect(game)}>
@@ -30,9 +25,9 @@ const Game = ({ game, onSelect }) => {
             <span className="live-dot" />
             <span className="live-text">{game.fixture.status.elapsed + `'`}</span>
           </div>
-        ) : postoponed ? (
+        ) : isPostponed(status) ? (
           <span className="finished">PST</span>
-        ) : cancelled ? (
+        ) : isCancelled(status) ? (
           <span className="finished">CAN</span>
         ) : (
           <span className="upcoming-label">PRE</span>
@@ -61,7 +56,7 @@ const Game = ({ game, onSelect }) => {
         {isNotStarted(status) && (
           <div className="kickoff-side">
             <span className="kickoff-time">
-              {formatTime(game.fixture.date)}
+              {time}
             </span>
           </div>
         )}
