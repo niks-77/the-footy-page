@@ -5,6 +5,7 @@
 The Footy Page is a full-stack web application that provides real-time football match information, scores, and statistics. The application follows a modern three-tier architecture with a React-based frontend, Express.js backend, and integration with external football data APIs.
 
 ## 🏗️ Architecture Diagram
+https://niks-77.github.io/the-footy-page/architecture-diagram.html
 
 ```mermaid
 graph LR
