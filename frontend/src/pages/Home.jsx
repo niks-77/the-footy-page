@@ -5,7 +5,7 @@ import { SearchIcon } from 'lucide-react'
 import { isLive } from '../utils/gameStatuses.js'
 import { SEARCH_DEBOUNCE_MS } from '../constants/index.js'
 import { useGameStore, useGameDetailsStore } from '../stores/index.js'
-import { Dayfilter, Typefilter, GameDetails } from '../components/index.js'
+import { Dayfilter, Typefilter, GameDetails, GamesByLeague } from '../components/index.js'
 
 const GameList = () => {
   const { showLiveGames, games, setGames, date,
