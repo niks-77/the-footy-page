@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Architecture Diagram</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            min-height: 100vh;
+            padding: 2rem;
+            overflow-x: hidden;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 0.6s ease-out;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #94a3b8;
+            font-size: 1.1rem;
+        }
+
+        .diagram-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .layer {
+            margin-bottom: 4rem;
+            position: relative;
+            animation: fadeInUp 0.6s ease-out backwards;
+        }
+
+        .layer:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .layer:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .layer:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .layer:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .layer-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .layer-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .badge-frontend {
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .badge-backend {
+            background: rgba(34, 197, 94, 0.2);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .badge-api {
+            background: rgba(168, 85, 247, 0.2);
+            color: #c084fc;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+        }
+
+        .badge-database {
+            background: rgba(251, 146, 60, 0.2);
+            color: #fb923c;
+            border: 1px solid rgba(251, 146, 60, 0.3);
+        }
+
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .component-card {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .component-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .component-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .component-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(59, 130, 246, 0.4);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
+        }
+
+        .component-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .component-name {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #f1f5f9;
+        }
+
+        .component-desc {
+            font-size: 0.875rem;
+            color: #94a3b8;
+            line-height: 1.5;
+        }
+
+        .component-tech {
+            display: inline-block;
+            margin-top: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            background: rgba(148, 163, 184, 0.1);
+            border-radius: 0.375rem;
+            font-size: 0.75rem;
+            color: #cbd5e1;
+        }
+
+        .flow-arrows {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: -2rem 0;
+        }
+
+        .arrow {
+            width: 3px;
+            height: 60px;
+            background: linear-gradient(180deg, rgba(59, 130, 246, 0.5) 0%, rgba(139, 92, 246, 0.5) 100%);
+            position: relative;
+            animation: flowDown 2s ease-in-out infinite;
+        }
+
+        .arrow::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 12px solid rgba(139, 92, 246, 0.5);
+        }
+
+        .api-endpoints {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .endpoint-card {
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .endpoint-card:hover {
+            border-color: rgba(168, 85, 247, 0.5);
+            background: rgba(30, 41, 59, 0.6);
+        }
+
+        .endpoint-method {
+            display: inline-block;
+            padding: 0.25rem 0.625rem;
+            border-radius: 0.375rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .method-get {
+            background: rgba(34, 197, 94, 0.2);
+            color: #4ade80;
+        }
+
+        .method-post {
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+        }
+
+        .endpoint-path {
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.875rem;
+            color: #c084fc;
+            margin-bottom: 0.5rem;
+        }
+
+        .endpoint-desc {
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+
+        .data-flow {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 2rem 0;
+            padding: 2rem;
+            background: rgba(30, 41, 59, 0.3);
+            border-radius: 1rem;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        .flow-node {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+
+        .flow-node-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1rem;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .flow-node-label {
+            font-weight: 600;
+            color: #f1f5f9;
+        }
+
+        .flow-connector {
+            flex: 0 0 100px;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(59, 130, 246, 0.5) 0%, rgba(139, 92, 246, 0.5) 100%);
+            position: relative;
+            margin: 0 -20px;
+            margin-bottom: 3rem;
+        }
+
+        .flow-connector::after {
+            content: '→';
+            position: absolute;
+            right: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(139, 92, 246, 0.8);
+            font-size: 1.5rem;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes flowDown {
+
+            0%,
+            100% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+            }
+
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 20px 10px rgba(59, 130, 246, 0);
+            }
+        }
+
+        .legend {
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background: rgba(30, 41, 59, 0.4);
+            border-radius: 1rem;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        .legend-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .legend-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 0.25rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .components-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .data-flow {
+                flex-direction: column;
+            }
+
+            .flow-connector {
+                width: 2px;
+                height: 60px;
+                transform: rotate(90deg);
+                margin: 1rem 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>⚽ The Footy Page Architecture</h1>
+        <p>Interactive visualization of frontend, backend & API communication</p>
+    </div>
+
+    <div class="diagram-container">
+        <!-- Data Flow Overview -->
+        <div class="data-flow">
+            <div class="flow-node">
+                <div class="flow-node-icon">⚛️</div>
+                <div class="flow-node-label">React Frontend</div>
+            </div>
+            <div class="flow-connector"></div>
+            <div class="flow-node">
+                <div class="flow-node-icon">📡</div>
+                <div class="flow-node-label">Axios HTTP Client</div>
+            </div>
+            <div class="flow-connector"></div>
+            <div class="flow-node">
+                <div class="flow-node-icon">🚀</div>
+                <div class="flow-node-label">Express Backend</div>
+            </div>
+            <div class="flow-connector"></div>
+            <div class="flow-node">
+                <div class="flow-node-icon">⚽</div>
+                <div class="flow-node-label">External Football API</div>
+            </div>
+        </div>
+
+        <!-- Frontend Layer -->
+        <div class="layer">
+            <div class="layer-title">
+                <span class="layer-badge badge-frontend">Frontend Layer</span>
+                <span style="color: #94a3b8;">React + Vite + Zustand</span>
+            </div>
+            <div class="components-grid">
+                <div class="component-card">
+                    <div class="component-icon">🏠</div>
+                    <div class="component-name">Home Page</div>
+                    <div class="component-desc">Main landing page displaying live and upcoming football matches with
+                        date filtering</div>
+                    <span class="component-tech">pages/Home.jsx</span>
+                </div>
+                <div class="component-card">
+                    <div class="component-icon">🏆</div>
+                    <div class="component-name">Games By League</div>
+                    <div class="component-desc">Groups and displays football games organized by their respective leagues
+                    </div>
+                    <span class="component-tech">components/GamesByLeague</span>
+                </div>
+                <div class="component-card">
+                    <div class="component-icon">⚽</div>
+                    <div class="component-name">Game Card</div>
+                    <div class="component-desc">Individual game card showing teams, scores, and match status with
+                        symmetrical layout</div>
+                    <span class="component-tech">components/Game</span>
+                </div>
+                <div class="component-card">
+                    <div class="component-icon">📊</div>
+                    <div class="component-name">Game Details</div>
+                    <div class="component-desc">Detailed statistics view for individual matches with team performance
+                        data</div>
+                    <span class="component-tech">components/GameDetails</span>
+                </div>
+                <div class="component-card">
+                    <div class="component-icon">🎯</div>
+                    <div class="component-name">Type Filter</div>
+                    <div class="component-desc">Borderless button filter for switching between match types with rounded
+                        border container</div>
+                    <span class="component-tech">components/Typefilter</span>
+                </div>
+                <div class="component-card">
+                    <div class="component-icon">📅</div>
+                    <div class="component-name">Day Filter</div>
+                    <div class="component-desc">Date navigation component for browsing matches across different days
+                    </div>
+                    <span class="component-tech">components/Dayfilter</span>
+                </div>
+                <div class="component-card">
+                    <div class="component-icon">🧭</div>
+                    <div class="component-name">Header Component</div>
+                    <div class="component-desc">"The Footy Page" branding header with logo alignment and responsive
+                        design</div>
+                    <span class="component-tech">header/index.jsx</span>
+                </div>
+                <div class="component-card">
+                    <div class="component-icon">👣</div>
+                    <div class="component-name">Footer Component</div>
+                    <div class="component-desc">Application footer with additional links and information</div>
+                    <span class="component-tech">footer/index.jsx</span>
+                </div>
+                <div class="component-card">
+                    <div class="component-icon">⏳</div>
+                    <div class="component-name">Skeleton Loading</div>
+                    <div class="component-desc">Loading placeholder component for better UX while fetching data</div>
+                    <span class="component-tech">components/SkeletonLoading</span>
+                </div>
+                <div class="component-card">
+                    <div class="component-icon">🐻</div>
+                    <div class="component-name">Zustand Stores</div>
+                    <div class="component-desc">State management - gameListStore and gameDetailsStore for global state
+                    </div>
+                    <span class="component-tech">stores/</span>
+                </div>
+                <div class="component-card">
+                    <div class="component-icon">📡</div>
+                    <div class="component-name">Football Service</div>
+                    <div class="component-desc">Axios-based API client with getGames() and getGamesById() methods</div>
+                    <span class="component-tech">services/football.js</span>
+                </div>
+                <div class="component-card">
+                    <div class="component-icon">💅</div>
+                    <div class="component-name">Stylus Stylesheets</div>
+                    <div class="component-desc">Component-specific .styl files for modern, responsive styling</div>
+                    <span class="component-tech">*.styl files</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="flow-arrows">
+            <div class="arrow"></div>
+        </div>
+
+        <!-- API Communication Layer -->
+        <div class="layer">
+            <div class="layer-title">
+                <span class="layer-badge badge-api">API Communication</span>
+                <span style="color: #94a3b8;">HTTP Requests (Frontend → Backend)</span>
+            </div>
+            <div class="api-endpoints">
+                <div class="endpoint-card">
+                    <span class="endpoint-method method-get">GET</span>
+                    <div class="endpoint-path">/api/games?date={date}</div>
+                    <div class="endpoint-desc">Fetch football games for a specific date - called by frontend service
+                    </div>
+                </div>
+                <div class="endpoint-card">
+                    <span class="endpoint-method method-get">GET</span>
+                    <div class="endpoint-path">/api/games/statistics?fixture={id}</div>
+                    <div class="endpoint-desc">Get detailed statistics for a specific game by fixture ID</div>
+                </div>
+                <div class="endpoint-card">
+                    <span class="endpoint-method method-get">GET</span>
+                    <div class="endpoint-path">/api/games/live</div>
+                    <div class="endpoint-desc">Retrieve currently live matches with real-time scores and status</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flow-arrows">
+            <div class="arrow"></div>
+        </div>
+
+        <!-- Backend Layer -->
+        <div class="layer">
+            <div class="layer-title">
+                <span class="layer-badge badge-backend">Backend Layer</span>
+                <span style="color: #94a3b8;">Express.js on Node.js</span>
+            </div>
+            <div class="components-grid">
+                <div class="component-card">
+                    <div class="component-icon">🚀</div>
+                    <div class="component-name">Express Server</div>
+                    <div class="component-desc">Main server running on port 3001 with CORS enabled for frontend
+                        communication</div>
+                    <span class="component-tech">src/server.js</span>
+                </div>
+                <div class="component-card">
+                    <div class="component-icon">🛣️</div>
+                    <div class="component-name">Football Routes</div>
+                    <div class="component-desc">Route definitions mounted at /api - maps endpoints to controller
+                        functions</div>
+                    <span class="component-tech">routes/football/routes.js</span>
+                </div>
+                <div class="component-card">
+                    <div class="component-icon">⚽</div>
+                    <div class="component-name">Get Games Controller</div>
+                    <div class="component-desc">Handles GET /games - fetches games by date with request validation
+                        schema</div>
+                    <span class="component-tech">controllers/football/get-games/</span>
+                </div>
+                <div class="component-card">
+                    <div class="component-icon">📊</div>
+                    <div class="component-name">Get Games By ID Controller</div>
+                    <div class="component-desc">Handles GET /games/statistics - retrieves detailed game statistics by
+                        fixture ID</div>
+                    <span class="component-tech">controllers/football/get-games-by-id/</span>
+                </div>
+                <div class="component-card">
+                    <div class="component-icon">🔴</div>
+                    <div class="component-name">Get Live Games Controller</div>
+                    <div class="component-desc">Handles GET /games/live - returns currently live matches with validation
+                    </div>
+                    <span class="component-tech">controllers/football/get-live-games/</span>
+                </div>
+                <div class="component-card">
+                    <div class="component-icon">⚡</div>
+                    <div class="component-name">Cache Library</div>
+                    <div class="component-desc">Caching layer for optimizing API responses and reducing external API
+                        calls</div>
+                    <span class="component-tech">lib/cache.js</span>
+                </div>
+                <div class="component-card">
+                    <div class="component-icon">🛡️</div>
+                    <div class="component-name">Error Middleware</div>
+                    <div class="component-desc">Error handler and unknown endpoint middleware for robust error handling
+                    </div>
+                    <span class="component-tech">middleware/error.js</span>
+                </div>
+                <div class="component-card">
+                    <div class="component-icon">📋</div>
+                    <div class="component-name">Request Schemas</div>
+                    <div class="component-desc">Validation schemas for each endpoint ensuring data integrity</div>
+                    <span class="component-tech">**/schema.js files</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="flow-arrows">
+            <div class="arrow"></div>
+        </div>
+
+        <!-- External API Layer -->
+        <div class="layer">
+            <div class="layer-title">
+                <span class="layer-badge badge-database">External Integration</span>
+                <span style="color: #94a3b8;">Third-Party Football Data API</span>
+            </div>
+            <div class="components-grid">
+                <div class="component-card">
+                    <div class="component-icon">⚽</div>
+                    <div class="component-name">Football Data Provider</div>
+                    <div class="component-desc">External API service providing live match data, scores, and statistics
+                    </div>
+                    <span class="component-tech">External API (API-Football / RapidAPI)</span>
+                </div>
+                <div class="component-card">
+                    <div class="component-icon">🔄</div>
+                    <div class="component-name">Data Fetching</div>
+                    <div class="component-desc">Backend controllers make HTTP requests to external API and transform
+                        data</div>
+                    <span class="component-tech">Controllers → External API</span>
+                </div>
+                <div class="component-card">
+                    <div class="component-icon">⏱️</div>
+                    <div class="component-name">Real-Time Updates</div>
+                    <div class="component-desc">Live game data updates including scores, match events, and kickoff times
+                    </div>
+                    <span class="component-tech">Live Data Stream</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Legend -->
+        <div class="legend">
+            <div class="legend-title">🎨 Technology Stack</div>
+            <div class="legend-items">
+                <div class="legend-item">
+                    <div class="legend-color" style="background: rgba(59, 130, 246, 0.5);"></div>
+                    <span>React 19 + Vite (Frontend)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: rgba(34, 197, 94, 0.5);"></div>
+                    <span>Express.js (Backend)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: rgba(168, 85, 247, 0.5);"></div>
+                    <span>Axios (HTTP Client)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: rgba(251, 146, 60, 0.5);"></div>
+                    <span>External Football API</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: rgba(236, 72, 153, 0.5);"></div>
+                    <span>Stylus (CSS Preprocessor)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: rgba(14, 165, 233, 0.5);"></div>
+                    <span>Zustand (State Management)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: rgba(168, 85, 247, 0.5);"></div>
+                    <span>React Router (Routing)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: rgba(34, 197, 94, 0.5);"></div>
+                    <span>Lucide Icons (UI Icons)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add interactive hover effects
+        document.querySelectorAll('.component-card').forEach(card => {
+            card.addEventListener('click', function () {
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
+            });
+        });
+
+        // Animate flow arrows on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.layer').forEach(layer => {
+            observer.observe(layer);
+        });
+    </script>
+</body>
+
+</html>
