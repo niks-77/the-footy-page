@@ -7,7 +7,13 @@ import footballRouter from './routes/football/routes.js';
 import { errorHandler, unknownEndpoint } from './middleware/error.js';
 
 const app = express();
-app.use(cors());
+// Solve CORS: Explicitly allow the Vercel origin and required headers
+// The generic app.use(cors()) often doesn't work well across different deployment platforms
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-apisports-key']
+}));
 app.use(express.json());
 
 app.use('/api', footballRouter);
