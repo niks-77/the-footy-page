@@ -7,16 +7,16 @@ const useGameStore = create((set) => ({
     date: today(),
     loading: false,
 
-    //Used in Typefilter to toggle between live and all games
+    //in Typefilter to toggle between live and all games
     showLiveGames: false,
     toggleLiveGames: () => set(state => ({ showLiveGames: !state.showLiveGames })),
 
 
-    //Used in Dayfilter to set the selected date
+    //in Dayfilter to set the selected date
     setSelectedDate: (date) => set({ date }),
 
 
-    //Used to fetch games from the API
+    // fetch games from the API
     setGames: async (date) => {
         set({ loading: true })
 
